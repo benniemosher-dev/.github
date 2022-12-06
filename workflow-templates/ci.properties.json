@@ -1,6 +1,6 @@
 {
-  "name": "BennieMosher.dev Organization Workflow",
-  "description": "BennieMosher.dev Organization CI starter workflow.",
+  "name": "BennieMosher.dev Terraform Workflow",
+  "description": "BennieMosher.dev Terraform CI starter workflow.",
   "iconName": "benniemosher-dev-logo",
   "categories": ["Terraform"],
   "filePatterns": [".*\\.tf$"]

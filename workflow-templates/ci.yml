@@ -1,4 +1,4 @@
-name: BennieMosher.dev Organization CI
+name: BennieMosher.dev Terraform CI
 
 on:
   push:
@@ -7,11 +7,16 @@ on:
     branches: [ $default-branch ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  lint:
+    name: Lint
+    uses: "benniemosher-dev/.github/.github/workflows/lint.yml@bam/add-cost-lint-sec-actions"
 
-    steps:
-      - uses: actions/checkout@v3
+  sec:
+    name: Sec
+    uses: "benniemosher-dev/.github/.github/workflows/sec.yml@bam/add-cost-lint-sec-actions"
 
-      - name: Run a one-line script
-        run: echo Hello from BennieMosher.dev Organization
+  # cost:
+  #   name: Cost
+  #   uses: "benniemosher-dev/.github/.github/workflows/cost.yml@bam/add-cost-lint-sec-actions"
+  #   secrets:
+  #     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
