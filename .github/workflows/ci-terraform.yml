@@ -19,17 +19,17 @@ on:
 jobs:
   lint-terraform:
     name: Lint Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/terraform/lint-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/lint-terraform.yml@main"
     if: ${{ inputs.enable-lint == true }}
 
   security-terraform:
     name: Security Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/terraform/sec-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@main"
     if: ${{ inputs.enable-security == true }}
 
   cost-terraform:
     name: Cost Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/terraform/cost-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
     if: ${{ inputs.enable-cost == true }}
     secrets:
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
