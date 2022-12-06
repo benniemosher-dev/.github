@@ -1,11 +1,11 @@
-name: Lint
+name: Lint Terraform
 
 on:
   workflow_call:
 
 jobs:
-  lint:
-    name: Lint
+  lint-terraform:
+    name: Lint Terraform
     runs-on: ubuntu-latest
 
     steps:

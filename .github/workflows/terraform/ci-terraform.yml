@@ -1,0 +1,19 @@
+name: Terraform CI
+
+on:
+  workflow_call:
+
+jobs:
+  lint-terraform:
+    name: Lint Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/terraform/lint-terraform.yml@main"
+
+  security-terraform:
+    name: Security Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/terraform/sec-terraform.yml@main"
+
+  cost-terraform:
+    name: Cost Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/terraform/cost-terraform.yml@main"
+    secrets:
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}

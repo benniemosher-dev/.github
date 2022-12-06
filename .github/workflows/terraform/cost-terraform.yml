@@ -1,4 +1,4 @@
-name: Cost
+name: Cost for Terraform
 
 on:
   workflow_call:
@@ -14,8 +14,8 @@ on:
     # SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
 jobs:
-  cost:
-    name: Cost
+  cost-terraform:
+    name: Cost for Terraform
     runs-on: ubuntu-latest
     env:
       TF_ROOT: .
