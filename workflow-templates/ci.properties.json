@@ -1,0 +1,7 @@
+{
+  "name": "BennieMosher.dev Organization Workflow",
+  "description": "BennieMosher.dev Organization CI starter workflow.",
+  "iconName": "benniemosher-dev-logo.svg",
+  "categories": ["Terraform"],
+  "filePatterns": [".*\\.tf$"]
+}
