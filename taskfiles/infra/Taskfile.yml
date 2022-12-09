@@ -2,18 +2,18 @@ version: '3'
 
 tasks:
   apply:
-    desc: Runs Terraform apply
+    desc: Runs Terraform apply (`-- -target='cloudflare_record.this'`)
     cmds:
-      - terraform apply
+      - terraform apply {{.CLI_ARGS}}
       - task: validate
   cost:
     desc: Estimates the cost of infrastructure (`-- -format=json` for JSON format)
     cmds:
       - infracost breakdown --path=./ {{.CLI_ARGS}}
   destroy:
-    desc: Runs Terraform destroy
+    desc: Runs Terraform destroy (`-- -target='cloudflare_record.this'`)
     cmds:
-      - terraform destroy
+      - terraform destroy {{.CLI_ARGS}}
   docs:
     desc: Updates Terraform docs
     cmds:
@@ -28,9 +28,9 @@ tasks:
     cmds:
       - tflint
   plan:
-    desc: Runs Terraform Plan
+    desc: Runs Terraform Plan (`-- -target='cloudflare_record.this'`)
     cmds:
-      - terraform plan -out=plan.tfplan
+      - terraform plan -out=plan.tfplan {{.CLI_ARGS}}
       - task: validate
   sec:
     desc: Validates security of Terraform resources
