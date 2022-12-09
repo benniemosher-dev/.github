@@ -1,0 +1,47 @@
+version: '3'
+
+tasks:
+  apply:
+    desc: Runs Terraform apply
+    cmds:
+      - terraform apply
+      - task: validate
+  cost:
+    desc: Estimates the cost of infrastructure (`-- -format=json` for JSON format)
+    cmds:
+      - infracost breakdown --path=./ {{.CLI_ARGS}}
+  destroy:
+    desc: Runs Terraform destroy
+    cmds:
+      - terraform destroy
+  docs:
+    desc: Updates Terraform docs
+    cmds:
+      - terraform-docs markdown . --output-file=README.md
+  init:
+    desc: Initializes Terraform (`-- -upgrade` to upgrade providers)
+    cmds:
+      - terraform init {{.CLI_ARGS}}
+      - tflint --init
+  lint:
+    desc: Lints Terraform
+    cmds:
+      - tflint
+  plan:
+    desc: Runs Terraform Plan
+    cmds:
+      - terraform plan -out=plan.tfplan
+      - task: validate
+  sec:
+    desc: Validates security of Terraform resources
+    cmds:
+      - tfsec .
+  validate:
+    desc: Runs Terraform fmt, validate, docs, lint, sec, and cost.
+    cmds:
+      - terraform fmt --recursive
+      - terraform validate
+      - task: docs
+      - task: lint
+      - task: sec
+      - task: cost
