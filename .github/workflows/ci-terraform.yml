@@ -20,6 +20,8 @@ on:
         required: false
         type: boolean
     secrets:
+      CLOUDFLARE_CONFIG:
+        required: false
       INFRACOST_API_KEY:
         required: true
 
