@@ -3,18 +3,22 @@ name: Terraform CI
 on:
   workflow_call:
     inputs:
-      enable-lint:
+      enable-cloudflare-tfvars:
+        default: false
         required: false
         type: boolean
-        default: true
-      enable-security:
-        required: false
-        type: boolean
-        default: true
       enable-cost:
+        default: true
         required: false
         type: boolean
+      enable-lint:
         default: true
+        required: false
+        type: boolean
+      enable-security:
+        default: true
+        required: false
+        type: boolean
     secrets:
       INFRACOST_API_KEY:
         required: true
@@ -33,6 +37,14 @@ jobs:
   cost-terraform:
     name: Cost Terraform
     uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
-    if: ${{ inputs.enable-cost == true }}
+    if: ${{ inputs.enable-cost == true && inputs.enable-cloudflare-tfvars == false}}
     secrets:
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+
+  cost-terraform:
+    name: Cost Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
+    if: ${{ inputs.enable-cost == true && inputs.enable-cloudflare-tfvars == true}}
+    secrets:
+      CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
