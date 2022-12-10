@@ -37,14 +37,8 @@ jobs:
   cost-terraform:
     name: Cost Terraform
     uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
-    if: ${{ inputs.enable-cost == true && inputs.enable-cloudflare-tfvars == false}}
+    if: ${{ inputs.enable-cost == true }}
     secrets:
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-
-  cost-terraform:
-    name: Cost Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
-    if: ${{ inputs.enable-cost == true && inputs.enable-cloudflare-tfvars == true}}
-    secrets:
-      CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
-      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+    with:
+      enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}

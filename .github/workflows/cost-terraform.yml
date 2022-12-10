@@ -2,6 +2,11 @@ name: Cost for Terraform
 
 on:
   workflow_call:
+    inputs:
+      enable-cloudflare-tfvars:
+        required: false
+        type: boolean
+        default: false
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
@@ -49,7 +54,7 @@ jobs:
         shell: bash
         env:
           CLOUDFLARE_CONFIG: ${{secrets.CLOUDFLARE_CONFIG}}
-        if: ${{ secrets.CLOUDFLARE_CONFIG != null }}
+        if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Cache .infracost/terraform_modules for target branch
         uses: actions/cache@v3
