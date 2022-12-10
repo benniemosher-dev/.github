@@ -30,7 +30,7 @@ tasks:
   plan:
     desc: Runs Terraform Plan (`-- -target='cloudflare_record.this'`)
     cmds:
-      - terraform plan -out=plan.tfplan {{.CLI_ARGS}}
+      - terraform plan {{.CLI_ARGS}}
       - task: validate
   sec:
     desc: Validates security of Terraform resources
