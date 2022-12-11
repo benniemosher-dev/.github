@@ -17,6 +17,13 @@ jobs:
           # terraform_version: 0.13.0:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+      - name: create .terraformrc
+        id: create-tfrc
+        run: 'echo "credentials \"app.terraform.io\" {token = \"$TF_API_TOKEN\"}" > ${TF_ROOT}/.terraformrc'
+        shell: bash
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
