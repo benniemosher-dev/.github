@@ -19,6 +19,10 @@ on:
         default: true
         required: false
         type: boolean
+      enable-terraform:
+        default: true
+        required: false
+        type: booleans
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
@@ -45,3 +49,8 @@ jobs:
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
     with:
       enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
+
+  terraform:
+    name: Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/terraform.yml@bam/add-terraform-workflow"
+    if: ${{ inputs.enable-terraform == true }}
