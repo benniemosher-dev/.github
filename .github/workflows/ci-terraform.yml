@@ -22,7 +22,7 @@ on:
       enable-terraform:
         default: true
         required: false
-        type: booleans
+        type: boolean
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
