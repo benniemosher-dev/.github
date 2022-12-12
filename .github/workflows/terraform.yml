@@ -35,7 +35,7 @@ jobs:
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Configure Cloudflare Secrets
-        run: 'echo "$CLOUDFLARE_CONFIG" > ${TF_ROOT}/cloudflare.auto.tfvars'
+        run: 'echo "cloudflare-config = $CLOUDFLARE_CONFIG" > ${TF_ROOT}/cloudflare.auto.tfvars'
         shell: bash
         env:
           CLOUDFLARE_CONFIG: ${{secrets.CLOUDFLARE_CONFIG}}
