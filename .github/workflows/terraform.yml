@@ -41,6 +41,8 @@ jobs:
           CLOUDFLARE_CONFIG: ${{secrets.CLOUDFLARE_CONFIG}}
         if: ${{ inputs.enable-cloudflare-tfvars }}
 
+      - run: cat ${TF_ROOT}/cloudflare.auto.tfvars
+
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
