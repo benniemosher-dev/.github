@@ -35,7 +35,7 @@ tasks:
   lint:
     desc: Lints Terraform
     cmds:
-      - tflint
+      - tflint -f compact
   plan:
     desc: Runs Terraform Plan (`-- -target='cloudflare_record.this'`)
     cmds:
