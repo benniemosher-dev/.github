@@ -10,6 +10,10 @@ on:
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
+      KEYBASE_USERNAME:
+        required: false
+      KEYBASE_PASSWORD:
+        required: false
       TF_API_TOKEN:
         required: true
 

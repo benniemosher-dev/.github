@@ -58,6 +58,8 @@ jobs:
     if: ${{ inputs.enable-terraform == true }}
     secrets:
       CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
+      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
+      KEYBASE_PASSWORD: ${{ secrets.KEYBASE_PASSWORD }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     with:
       enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
