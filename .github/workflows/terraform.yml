@@ -51,7 +51,7 @@ jobs:
           repo: keybase://team/benniemosher_dev/secrets
           paths: "cloudflare.auto.tfvars"
           target: ${TF_ROOT}
-          if: ${{ inputs.enable-cloudflare-tfvars }}
+        if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Terraform Format
         id: fmt
