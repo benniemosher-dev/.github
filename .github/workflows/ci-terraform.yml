@@ -26,6 +26,10 @@ on:
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
+      KEYBASE_USERNAME:
+        required: false
+      KEYBASE_PASSWORD:
+        required: false
       INFRACOST_API_KEY:
         required: true
       TF_API_TOKEN:
