@@ -12,7 +12,7 @@ on:
         required: false
       KEYBASE_USERNAME:
         required: false
-      KEYBASE_PASSWORD:
+      KEYBASE_PAPERKEY:
         required: false
       TF_API_TOKEN:
         required: true
