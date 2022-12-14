@@ -38,21 +38,12 @@ jobs:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # - name: Configure Cloudflare Secrets
-      #   run: 'echo "$CLOUDFLARE_CONFIG" > ${TF_ROOT}/cloudflare.auto.tfvars'
-      #   shell: bash
-      #   env:
-      #     CLOUDFLARE_CONFIG: ${{secrets.CLOUDFLARE_CONFIG}}
-      #   if: ${{ inputs.enable-cloudflare-tfvars }}
-
-      # - run: cat ${TF_ROOT}/cloudflare.auto.tfvars
-
       - name: Fetch Cloudflare Secrets
         uses: briceburg/github-action-keybase-git-repo@v0
         with:
           keybase_username: ${{ secrets.KEYBASE_USERNAME }}
           keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
-          repo: keybase://team/benniemosher_dev/secrets
+          repo: keybase://private/benniemosher/secrets
           paths: "cloudflare.auto.tfvars"
           target: ${TF_ROOT}
         if: ${{ inputs.enable-cloudflare-tfvars }}
