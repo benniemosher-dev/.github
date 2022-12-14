@@ -10,6 +10,11 @@ tasks:
     desc: Estimates the cost of infrastructure (`-- -format=json` for JSON format)
     cmds:
       - infracost breakdown --path=./ {{.CLI_ARGS}}
+  cost-readme:
+    desc: Estimates the cost of the infrastructure and outputs into README.md
+    cmds:
+      # TODO: Make this path more dynamic
+      - python ${HOME}/Code/benniemosher-dev/.github/scripts/replace.py --path={{.USER_WORKING_DIR}}
   destroy:
     desc: Runs Terraform destroy (`-- -target='cloudflare_record.this'`)
     cmds:
@@ -41,11 +46,11 @@ tasks:
     cmds:
       - tfsec .
   validate:
-    desc: Runs Terraform fmt, validate, docs, lint, sec, and cost.
+    desc: Runs Terraform fmt, validate, docs, lint, sec, and cost-readme.
     cmds:
       - terraform fmt --recursive
       - terraform validate
       - task: docs
       - task: lint
       - task: sec
-      - task: cost
+      - task: cost-readme
