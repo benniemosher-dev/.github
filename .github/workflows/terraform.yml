@@ -43,7 +43,7 @@ jobs:
         with:
           keybase_username: ${{ secrets.KEYBASE_USERNAME }}
           keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
-          repo: keybase://private/benniemosher/secrets
+          repo: keybase://team/benniemosher_dev/secrets
           paths: "cloudflare.auto.tfvars"
           target: ${TF_ROOT}
         if: ${{ inputs.enable-cloudflare-tfvars }}
