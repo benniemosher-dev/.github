@@ -45,7 +45,6 @@ jobs:
           keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
           repo: keybase://team/benniemosher_dev/secrets
           paths: "cloudflare.auto.tfvars"
-          target: ${TF_ROOT}
         if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Terraform Format
