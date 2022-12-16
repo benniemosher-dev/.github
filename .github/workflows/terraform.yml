@@ -3,11 +3,14 @@ name: "Terraform"
 on:
   workflow_call:
     inputs:
+      aws-region:
+        required: false
+        type: string
       enable-cloudflare-tfvars:
         default: false
         required: false
         type: boolean
-      aws-region:
+      iam-role-name:
         required: false
         type: string
     secrets:
@@ -41,7 +44,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ inputs.iam-role-name }}
           aws-region: ${{ inputs.aws-region }}
 
       - name: Fetch Cloudflare Secrets

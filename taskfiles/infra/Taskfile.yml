@@ -45,6 +45,10 @@ tasks:
     desc: Validates security of Terraform resources
     cmds:
       - tfsec .
+  state:
+    desc: Runs Terraform State ('-- mv')
+    cmds:
+      - terraform state {{.CLI_ARGS}}
   validate:
     desc: Runs Terraform fmt, validate, docs, lint, sec, and cost-readme.
     cmds:

@@ -27,6 +27,9 @@ on:
         default: true
         required: false
         type: boolean
+      iam-role-name:
+        required: false
+        type: string
     secrets:
       AWS_ACCOUNT_ID:
         required: false
@@ -67,9 +70,10 @@ jobs:
     if: ${{ inputs.enable-terraform == true }}
     secrets:
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
       KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
+      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     with:
-      enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
       aws-region: ${{ inputs.aws-region }}
+      enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
+      iam-role-name: ${{ inputs.iam-role-name }}
