@@ -4,9 +4,9 @@ on:
   workflow_call:
     inputs:
       enable-cloudflare-tfvars:
+        default: false
         required: false
         type: boolean
-        default: false
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
@@ -39,7 +39,7 @@ jobs:
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Fetch Cloudflare Secrets
-        uses: briceburg/github-action-keybase-git-repo@v0
+        uses: briceburg/github-action-keybase-git-repo@v0.1.1
         with:
           keybase_username: ${{ secrets.KEYBASE_USERNAME }}
           keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
