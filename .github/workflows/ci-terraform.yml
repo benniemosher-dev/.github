@@ -52,11 +52,12 @@ jobs:
 
   cost-terraform:
     name: Cost Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@bam/add-terraform-workflow"
     if: ${{ inputs.enable-cost == true }}
     secrets:
-      CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
+      KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
     with:
       enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
 

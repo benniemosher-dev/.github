@@ -43,7 +43,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions
           aws-region: ${{ inputs.aws-region }}
-        if: ${{ secrets.AWS_ACCOUNT_ID }} && ${{ inputs.aws-region }}
+        if: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Fetch Cloudflare Secrets
         uses: briceburg/github-action-keybase-git-repo@v0.1.1
