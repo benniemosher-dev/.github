@@ -7,12 +7,15 @@ on:
         default: false
         required: false
         type: boolean
-    secrets:
-      CLOUDFLARE_CONFIG:
+      aws-region:
         required: false
+        type: string
+    secrets:
       KEYBASE_USERNAME:
         required: false
       KEYBASE_PAPERKEY:
+        required: false
+      AWS_ACCOUNT_ID:
         required: false
       TF_API_TOKEN:
         required: true
@@ -21,6 +24,9 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     env:
       TF_ROOT: .
     steps:
@@ -32,11 +38,12 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions
+          aws-region: ${{ inputs.aws-region }}
+        if: ${{ secrets.AWS_ACCOUNT_ID }} && ${{ inputs.aws-region }}
 
       - name: Fetch Cloudflare Secrets
         uses: briceburg/github-action-keybase-git-repo@v0.1.1

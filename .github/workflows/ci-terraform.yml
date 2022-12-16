@@ -7,6 +7,10 @@ on:
         default: false
         required: false
         type: boolean
+      aws-region:
+        default: us-east-1
+        required: false
+        type: string
       enable-cost:
         default: true
         required: false
@@ -24,6 +28,8 @@ on:
         required: false
         type: boolean
     secrets:
+      AWS_ACCOUNT_ID:
+        required: false
       KEYBASE_USERNAME:
         required: false
       KEYBASE_PAPERKEY:
@@ -59,8 +65,10 @@ jobs:
     uses: "benniemosher-dev/.github/.github/workflows/terraform.yml@bam/add-terraform-workflow"
     if: ${{ inputs.enable-terraform == true }}
     secrets:
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
       KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     with:
       enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
+      aws-region: ${{ inputs.aws-region }}
