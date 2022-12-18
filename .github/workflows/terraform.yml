@@ -10,6 +10,10 @@ on:
         default: false
         required: false
         type: boolean
+      enable-terraform-plan-apply:
+        default: false
+        required: false
+        type: boolean
       iam-role-name:
         required: false
         type: string
@@ -63,21 +67,21 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        if: ${{ inputs.enable-terraform-plan-apply }}
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-
-      - run: ls -lah
 
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
         continue-on-error: true
+        if: ${{ inputs.enable-terraform-plan-apply }}
 
       - uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && ${{ inputs.enable-terraform-plan-apply }}
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
@@ -100,9 +104,9 @@ jobs:
               body: output
             })
       - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
+        if: steps.plan.outcome == 'failure' && ${{ inputs.enable-terraform-plan-apply }}
         run: exit 1
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && ${{ inputs.enable-terraform-plan-apply }}
         run: terraform apply -auto-approve -input=false

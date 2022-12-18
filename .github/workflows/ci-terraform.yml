@@ -27,6 +27,10 @@ on:
         default: true
         required: false
         type: boolean
+      enable-terraform-plan-apply:
+        default: false
+        required: false
+        type: boolean
       iam-role-name:
         required: false
         type: string
@@ -67,7 +71,7 @@ jobs:
   terraform:
     name: Terraform
     uses: "benniemosher-dev/.github/.github/workflows/terraform.yml@bam/add-terraform-workflow"
-    if: ${{ inputs.enable-terraform == true }}
+    if: ${{ inputs.enable-terraform }} && ${{ inputs.enable-terraform-plan-apply }}
     secrets:
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
