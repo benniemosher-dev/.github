@@ -50,6 +50,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ inputs.iam-role-name }}
           aws-region: ${{ inputs.aws-region }}
+        if: ${{ inputs.enable-terraform-plan-apply }}
 
       - name: Fetch Cloudflare Secrets
         uses: briceburg/github-action-keybase-git-repo@v0.1.1
@@ -58,7 +59,7 @@ jobs:
           keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
           repo: keybase://team/benniemosher_dev/secrets
           paths: "cloudflare.auto.tfvars"
-        if: ${{ inputs.enable-cloudflare-tfvars }}
+        if: ${{ inputs.enable-cloudflare-tfvars }} && ${{ inputs.enable-terraform-plan-apply }}
 
       - name: Terraform Format
         id: fmt
