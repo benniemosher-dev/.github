@@ -7,6 +7,10 @@ on:
         default: false
         required: false
         type: boolean
+      aws-region:
+        default: us-east-1
+        required: false
+        type: string
       enable-cost:
         default: true
         required: false
@@ -19,10 +23,27 @@ on:
         default: true
         required: false
         type: boolean
+      enable-terraform:
+        default: true
+        required: false
+        type: boolean
+      enable-terraform-plan-apply:
+        default: false
+        required: false
+        type: boolean
+      iam-role-name:
+        required: false
+        type: string
     secrets:
-      CLOUDFLARE_CONFIG:
+      AWS_ACCOUNT_ID:
+        required: false
+      KEYBASE_USERNAME:
+        required: false
+      KEYBASE_PAPERKEY:
         required: false
       INFRACOST_API_KEY:
+        required: true
+      TF_API_TOKEN:
         required: true
 
 jobs:
@@ -38,10 +59,25 @@ jobs:
 
   cost-terraform:
     name: Cost Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@bam/add-terraform-workflow"
     if: ${{ inputs.enable-cost == true }}
     secrets:
-      CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
+      KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
     with:
       enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
+
+  terraform:
+    name: Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/terraform.yml@bam/add-terraform-workflow"
+    if: ${{ inputs.enable-terraform }} && ${{ inputs.enable-terraform-plan-apply }}
+    secrets:
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      KEYBASE_PAPERKEY: ${{ secrets.KEYBASE_PAPERKEY }}
+      KEYBASE_USERNAME: ${{ secrets.KEYBASE_USERNAME }}
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+    with:
+      aws-region: ${{ inputs.aws-region }}
+      enable-cloudflare-tfvars: ${{ inputs.enable-cloudflare-tfvars }}
+      iam-role-name: ${{ inputs.iam-role-name }}

@@ -8,10 +8,12 @@ on:
         type: boolean
         default: false
     secrets:
-      CLOUDFLARE_CONFIG:
-        required: false
       INFRACOST_API_KEY:
         required: true
+      KEYBASE_USERNAME:
+        required: false
+      KEYBASE_PAPERKEY:
+        required: false
       # GIT_SSH_KEY:
       #   required: true
 
@@ -49,11 +51,13 @@ jobs:
           ref: '${{ github.event.pull_request.base.ref }}'
         # if: steps.cache-infracost-base-json.outputs.cache-hit != 'true'
 
-      - name: Configure Cloudflare Secrets
-        run: 'echo "$CLOUDFLARE_CONFIG" > ${TF_ROOT}/cloudflare.auto.tfvars'
-        shell: bash
-        env:
-          CLOUDFLARE_CONFIG: ${{secrets.CLOUDFLARE_CONFIG}}
+      - name: Fetch Cloudflare Secrets
+        uses: briceburg/github-action-keybase-git-repo@v0.1.1
+        with:
+          keybase_username: ${{ secrets.KEYBASE_USERNAME }}
+          keybase_paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
+          repo: keybase://team/benniemosher_dev/secrets
+          paths: "cloudflare.auto.tfvars"
         if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Cache .infracost/terraform_modules for target branch
