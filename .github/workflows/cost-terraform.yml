@@ -16,9 +16,9 @@ on:
       #   required: true
 
 # env:
-    # If you use private modules you'll need this env variable to use
-    # the same ssh-agent socket value across all jobs & steps.
-    # SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+# If you use private modules you'll need this env variable to use
+# the same ssh-agent socket value across all jobs & steps.
+# SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
 jobs:
   cost-terraform:
@@ -39,14 +39,14 @@ jobs:
         id: cache-infracost-base-json
         uses: actions/cache@v3
         with:
-          path: '/tmp/infracost-base.json'
+          path: "/tmp/infracost-base.json"
           key: infracost-base-json-${{ runner.os }}-${{ github.event.pull_request.base.sha || github.sha }}
 
       # Checkout the base branch of the pull request (e.g. main/master).
       - name: Checkout base branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          ref: '${{ github.event.pull_request.base.ref }}'
+          ref: "${{ github.event.pull_request.base.ref }}"
         # if: steps.cache-infracost-base-json.outputs.cache-hit != 'true'
 
       - name: Configure Cloudflare Secrets
@@ -57,7 +57,7 @@ jobs:
         if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Cache .infracost/terraform_modules for target branch
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ env.TF_ROOT }}/**/.infracost/terraform_modules/**
@@ -79,14 +79,14 @@ jobs:
 
       # Checkout the current PR branch so we can create a diff.
       - name: Checkout PR branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # Make sure the .infracost dir stays between runs so that downloaded modules persist
           clean: false
         if: github.event_name == 'pull_request'
 
       - name: Cache .infracost/terraform_modules dir for PR branch
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ env.TF_ROOT }}/**/.infracost/terraform_modules/**
@@ -129,9 +129,9 @@ jobs:
       #                                 --behavior=update
       - name: Post Infracost comment
         run: |
-            infracost comment github --path=/tmp/infracost.json \
-                                      --repo=$GITHUB_REPOSITORY \
-                                      --github-token=${{github.token}} \
-                                      --pull-request=${{github.event.pull_request.number}} \
-                                      --behavior=update
+          infracost comment github --path=/tmp/infracost.json \
+                                    --repo=$GITHUB_REPOSITORY \
+                                    --github-token=${{github.token}} \
+                                    --pull-request=${{github.event.pull_request.number}} \
+                                    --behavior=update
         if: github.event_name == 'pull_request'
