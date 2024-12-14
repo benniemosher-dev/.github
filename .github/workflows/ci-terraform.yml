@@ -24,17 +24,17 @@ on:
         required: true
 
 jobs:
-  pre-commit-terraform:
+  pre-commit:
     name: Pre-Commit
     uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@tf-scans"
     if: ${{ inputs.enable-pre-commit == true }}
 
-  security-terraform:
+  security:
     name: Security
     uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@tf-scans"
     if: ${{ inputs.enable-security == true }}
 
-  cost-terraform:
+  cost:
     name: Cost
     uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
     if: ${{ inputs.enable-cost == true }}

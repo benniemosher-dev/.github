@@ -2,7 +2,7 @@ on:
   workflow_call:
 
 jobs:
-  sec-terraform:
+  sec:
     runs-on: ubuntu-latest
     permissions:
       actions: read

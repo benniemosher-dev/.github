@@ -19,7 +19,7 @@ on:
 # SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
 jobs:
-  cost-terraform:
+  cost:
     runs-on: ubuntu-latest
     env:
       TF_ROOT: .
