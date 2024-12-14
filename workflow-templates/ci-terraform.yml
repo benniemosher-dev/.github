@@ -1,14 +1,17 @@
-name: BennieMosher.dev CI for Terraform
+---
+name: Terraform CI
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches:
+      - $default-branch
   pull_request:
-    branches: [ $default-branch ]
+    branches:
+      - $default-branch
 
 jobs:
   ci-terraform:
-    name: Continuous Integration for Terraform
+    name: Terraform CI
     uses: "benniemosher-dev/.github/.github/workflows/ci-terraform.yml@main"
     # with:
     #   enable-cost: false

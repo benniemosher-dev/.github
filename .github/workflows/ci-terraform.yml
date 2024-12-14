@@ -1,5 +1,4 @@
-name: Terraform CI
-
+---
 on:
   workflow_call:
     inputs:
@@ -11,7 +10,7 @@ on:
         default: true
         required: false
         type: boolean
-      enable-lint:
+      enable-pre-commit:
         default: true
         required: false
         type: boolean
@@ -26,18 +25,18 @@ on:
         required: true
 
 jobs:
-  lint-terraform:
-    name: Lint Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/lint-terraform.yml@main"
-    if: ${{ inputs.enable-lint == true }}
+  pre-commit:
+    name: Pre-Commit
+    uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@tf-scans"
+    if: ${{ inputs.enable-pre-commit == true }}
 
-  security-terraform:
-    name: Security Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@main"
+  security:
+    name: Security
+    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@tf-scans"
     if: ${{ inputs.enable-security == true }}
 
-  cost-terraform:
-    name: Cost Terraform
+  cost:
+    name: Cost
     uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
     if: ${{ inputs.enable-cost == true }}
     secrets:
