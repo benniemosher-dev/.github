@@ -24,7 +24,6 @@ jobs:
       - name: Run Checkov
         uses: bridgecrewio/checkov-action@v12
         with:
-          # This will add both a CLI output to the console and create a results.sarif file
           output_format: cli,sarif
           output_file_path: console,checkov.sarif
 
@@ -39,33 +38,18 @@ jobs:
 
       - name: Upload terrascan SARIF file
         uses: github/codeql-action/upload-sarif@v3
-        # Results are generated only on a success or failure
-        # this is required since GitHub by default won't run the next step
-        # when the previous one has failed. Security checks that do not pass will 'fail'.
-        # An alternative is to add `continue-on-error: true` to the previous step
-        # Or 'soft_fail: true' to checkov.
         if: success() || failure()
         with:
           sarif_file: terrascan.sarif
 
       - name: Upload Checkov SARIF file
         uses: github/codeql-action/upload-sarif@v3
-        # Results are generated only on a success or failure
-        # this is required since GitHub by default won't run the next step
-        # when the previous one has failed. Security checks that do not pass will 'fail'.
-        # An alternative is to add `continue-on-error: true` to the previous step
-        # Or 'soft_fail: true' to checkov.
         if: success() || failure()
         with:
           sarif_file: checkov.sarif
 
       - name: Upload tfsec SARIF file
         uses: github/codeql-action/upload-sarif@v3
-        # Results are generated only on a success or failure
-        # this is required since GitHub by default won't run the next step
-        # when the previous one has failed. Security checks that do not pass will 'fail'.
-        # An alternative is to add `continue-on-error: true` to the previous step
-        # Or 'soft_fail: true' to checkov.
         if: success() || failure()
         with:
           sarif_file: tfsec.sarif
