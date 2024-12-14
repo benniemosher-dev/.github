@@ -1,5 +1,3 @@
-name: Cost for Terraform
-
 on:
   workflow_call:
     inputs:
@@ -22,7 +20,6 @@ on:
 
 jobs:
   cost-terraform:
-    name: Cost for Terraform
     runs-on: ubuntu-latest
     env:
       TF_ROOT: .

@@ -1,5 +1,3 @@
-name: Terraform CI
-
 on:
   workflow_call:
     inputs:
@@ -27,17 +25,17 @@ on:
 
 jobs:
   pre-commit-terraform:
-    name: Pre-Commit for Terraform
+    name: Pre-Commit
     uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@tf-scans"
     if: ${{ inputs.enable-pre-commit == true }}
 
   security-terraform:
-    name: Security Terraform
+    name: Security
     uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@tf-scans"
     if: ${{ inputs.enable-security == true }}
 
   cost-terraform:
-    name: Cost Terraform
+    name: Cost
     uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
     if: ${{ inputs.enable-cost == true }}
     secrets:

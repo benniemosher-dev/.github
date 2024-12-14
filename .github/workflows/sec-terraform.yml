@@ -1,11 +1,8 @@
-name: Security Terraform
-
 on:
   workflow_call:
 
 jobs:
   sec-terraform:
-    name: Security Terraform
     runs-on: ubuntu-latest
     permissions:
       actions: read

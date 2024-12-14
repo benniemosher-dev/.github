@@ -1,11 +1,8 @@
-name: Pre-Commit for Terraform
-
 on:
   workflow_call:
 
 jobs:
   pre-commit-terraform:
-    name: Pre-Commit for Terraform
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/antonbabenko/pre-commit-terraform:latest # latest used here for simplicity, not recommended
