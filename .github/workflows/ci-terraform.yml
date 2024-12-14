@@ -11,7 +11,7 @@ on:
         default: true
         required: false
         type: boolean
-      enable-lint:
+      enable-pre-commit:
         default: true
         required: false
         type: boolean
@@ -26,10 +26,10 @@ on:
         required: true
 
 jobs:
-  lint-terraform:
-    name: Lint Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/lint-terraform.yml@main"
-    if: ${{ inputs.enable-lint == true }}
+  pre-commit-terraform:
+    name: Pre-Commit for Terraform
+    uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@main"
+    if: ${{ inputs.enable-pre-commit == true }}
 
   security-terraform:
     name: Security Terraform
