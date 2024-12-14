@@ -1,21 +1,20 @@
 ---
 on:
   workflow_call:
+  pull_request:
   push:
+    branches: [main]
 
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - run: |
-          git config --global --add safe.directory $GITHUB_WORKSPACE
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+      - uses: actions/setup-python@v3
 
       - name: Get changed files
         id: file_changes
@@ -30,6 +29,6 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit-3|${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - name: Execute pre-commit
-        run: |
-          pre-commit run --color=always --show-diff-on-failure --files ${{ steps.file_changes.outputs.files }}
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: "--files ${{ steps.file_changes.outputs.files }}"
