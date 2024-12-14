@@ -28,7 +28,7 @@ on:
 jobs:
   pre-commit-terraform:
     name: Pre-Commit for Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@tf-scans"
     if: ${{ inputs.enable-pre-commit == true }}
 
   security-terraform:
