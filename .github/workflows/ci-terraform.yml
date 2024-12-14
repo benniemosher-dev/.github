@@ -33,7 +33,7 @@ jobs:
 
   security-terraform:
     name: Security Terraform
-    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@main"
+    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@tf-scans"
     if: ${{ inputs.enable-security == true }}
 
   cost-terraform:
