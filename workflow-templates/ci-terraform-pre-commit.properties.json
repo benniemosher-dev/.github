@@ -1,0 +1,11 @@
+{
+  "name": "BennieMosher.dev Pre-Commit Terraform Workflow",
+  "description": "BennieMosher.dev Pre-Commit Terraform CI starter workflow.",
+  "iconName": "benniemosher-dev-logo",
+  "categories": [
+    "Terraform"
+  ],
+  "filePatterns": [
+    ".*\\.tf$"
+  ]
+}
