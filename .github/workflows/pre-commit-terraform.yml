@@ -34,12 +34,24 @@ jobs:
           # check python modules installed versions
           python -m pip freeze --local
 
+      - name: Check for pre-commit config
+        id: check_config
+        run: |
+          if [ -f ".pre-commit-config.yaml" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "No .pre-commit-config.yaml found, skipping pre-commit"
+          fi
+
       - name: Cache pre-commit since we use pre-commit from container
+        if: steps.check_config.outputs.exists == 'true'
         uses: actions/cache@v5
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-3|${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Execute pre-commit
+        if: steps.check_config.outputs.exists == 'true'
         run: |
           pre-commit run --color=always --show-diff-on-failure --files ${{ steps.file_changes.outputs.files }} --config .pre-commit-config.yaml
