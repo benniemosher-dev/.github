@@ -24,6 +24,9 @@ jobs:
         with:
           output_format: cli,sarif
           output_file_path: console,checkov.sarif
+          # Skip CKV_GHA_7 (unpinned action) - using @main for internal
+          # reusable workflows is acceptable
+          skip_check: CKV_GHA_7
 
       - name: Run Terrascan
         id: terrascan
