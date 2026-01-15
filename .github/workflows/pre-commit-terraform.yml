@@ -42,4 +42,4 @@ jobs:
 
       - name: Execute pre-commit
         run: |
-          pre-commit run --color=always --show-diff-on-failure --files ${{ steps.file_changes.outputs.files }} --config .pre-commit-config-ci.yaml
+          pre-commit run --color=always --show-diff-on-failure --files ${{ steps.file_changes.outputs.files }} --config .pre-commit-config.yaml
