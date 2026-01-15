@@ -20,19 +20,19 @@ jobs:
 
     steps:
       - name: Setup Infracost
-        uses: infracost/actions/setup@v2
+        uses: infracost/actions/setup@v3
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
       - name: Cache the Infracost baseline JSON result
         id: cache-infracost-base-json
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: "/tmp/infracost-base.json"
           key: infracost-base-json-${{ runner.os }}-${{ github.event.pull_request.base.sha || github.sha }}
 
       - name: Checkout base branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: "${{ github.event.pull_request.base.ref }}"
 
@@ -44,7 +44,7 @@ jobs:
         if: ${{ inputs.enable-cloudflare-tfvars }}
 
       - name: Cache .infracost/terraform_modules for target branch
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ${{ env.TF_ROOT }}/**/.infracost/terraform_modules/**
@@ -62,13 +62,13 @@ jobs:
         if: steps.cache-infracost-base-json.outputs.cache-hit != 'true'
 
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           clean: false
         if: github.event_name == 'pull_request'
 
       - name: Cache .infracost/terraform_modules dir for PR branch
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ${{ env.TF_ROOT }}/**/.infracost/terraform_modules/**
