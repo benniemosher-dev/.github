@@ -24,6 +24,7 @@ jobs:
         with:
           output_format: cli,sarif
           output_file_path: console,checkov.sarif
+          config_file: .checkov.yaml
           # Skip CKV_GHA_7 (unpinned action) - using @main for internal
           # reusable workflows is acceptable
           # Skip CKV2_GHA_1 (top-level permissions) - caller workflows don't
