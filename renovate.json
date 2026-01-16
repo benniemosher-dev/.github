@@ -1,0 +1,52 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    "group:allNonMajor"
+  ],
+  "labels": ["dependencies"],
+  "schedule": ["before 9am on monday"],
+  "timezone": "America/New_York",
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "description": "Automerge minor and patch updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Require manual review for major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major"]
+    },
+    {
+      "description": "Group Terraform AWS provider updates",
+      "matchManagers": ["terraform"],
+      "matchPackagePatterns": ["^hashicorp/aws", "^aws$"],
+      "groupName": "terraform aws"
+    },
+    {
+      "description": "Group Terraform GitHub provider updates",
+      "matchManagers": ["terraform"],
+      "matchPackagePatterns": ["^integrations/github", "^github$"],
+      "groupName": "terraform github"
+    },
+    {
+      "description": "Group GitHub Actions updates",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    },
+    {
+      "description": "Group pre-commit hook updates",
+      "matchManagers": ["pre-commit"],
+      "groupName": "pre-commit hooks"
+    }
+  ]
+}
