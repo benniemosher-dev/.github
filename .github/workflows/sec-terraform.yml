@@ -24,7 +24,6 @@ jobs:
         with:
           output_format: cli,sarif
           output_file_path: console,checkov.sarif
-          config_file: .checkov.yaml
 
       - name: Run Terrascan
         id: terrascan
