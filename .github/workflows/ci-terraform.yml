@@ -27,17 +27,17 @@ on:
 jobs:
   pre-commit:
     name: Pre-Commit
-    uses: "benniemosher-dev/.github/.github/workflows/pre-commit-terraform.yml@main"
+    uses: "./.github/workflows/pre-commit-terraform.yml"
     if: ${{ inputs.enable-pre-commit == true }}
 
   security:
     name: Security
-    uses: "benniemosher-dev/.github/.github/workflows/sec-terraform.yml@main"
+    uses: "./.github/workflows/sec-terraform.yml"
     if: ${{ inputs.enable-security == true }}
 
   cost:
     name: Cost
-    uses: "benniemosher-dev/.github/.github/workflows/cost-terraform.yml@main"
+    uses: "./.github/workflows/cost-terraform.yml"
     if: ${{ inputs.enable-cost == true }}
     secrets:
       CLOUDFLARE_CONFIG: ${{ secrets.CLOUDFLARE_CONFIG }}
