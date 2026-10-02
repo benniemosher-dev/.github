@@ -76,12 +76,14 @@ jobs:
         if: github.event_name != 'pull_request' && steps.semver.outputs.next != ''
         uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd  # v1.21.0
         with:
-          # inputs are empty on push, so fall back to the workflow_call defaults.
-          allowUpdates: ${{ inputs.enable_updates != false }}
+          # inputs are null on push. Compare as strings to fall back to the
+          # workflow_call defaults: `null != false` is false in expressions,
+          # because both sides coerce to 0.
+          allowUpdates: ${{ format('{0}', inputs.enable_updates) != 'false' }}
           commit: main
-          draft: ${{ inputs.enable_draft == true }}
-          makeLatest: ${{ inputs.enable_latest != false }}
-          generateReleaseNotes: ${{ inputs.enable_release_notes != false }}
+          draft: ${{ format('{0}', inputs.enable_draft) == 'true' }}
+          makeLatest: ${{ format('{0}', inputs.enable_latest) != 'false' }}
+          generateReleaseNotes: ${{ format('{0}', inputs.enable_release_notes) != 'false' }}
           name: ${{ steps.semver.outputs.next }}
           tag: ${{ steps.semver.outputs.next }}
           token: ${{ github.token }}
