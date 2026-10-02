@@ -1,0 +1,87 @@
+---
+name: Release
+
+# Cuts a semver release from the conventional commit history on main, so
+# consumers can pin these workflows to a version tag. Also callable from other
+# repos. Same as Mosher-Labs/.github's release.yml, without the Slack and PR
+# comment notifications, which need secrets this org doesn't have.
+
+on:
+  workflow_call:
+    inputs:
+      enable_draft:
+        required: false
+        type: boolean
+        default: false
+      enable_latest:
+        required: false
+        type: boolean
+        default: true
+      enable_release_notes:
+        required: false
+        type: boolean
+        default: true
+      enable_updates:
+        required: false
+        type: boolean
+        default: true
+    outputs:
+      next_version:
+        value: ${{ jobs.release.outputs.next_version }}
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      next_version: ${{ steps.semver.outputs.next }}
+
+    steps:
+      - name: Checkout Code (Full History for PRs)
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Checkout Code (Regular)
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@c90370b2958652d71c06a3484129a4d423a6d8a8  # v1.11.0
+        with:
+          token: ${{ github.token }}
+          branch: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          noVersionBumpBehavior: "silent"
+          noNewCommitBehavior: "silent"
+          skipInvalidTags: true
+          patchList: fix,bugfix,perf,refactor,test,tests,chore,ci,build
+
+      - name: Create Release
+        if: github.event_name != 'pull_request' && steps.semver.outputs.next != ''
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd  # v1.21.0
+        with:
+          # inputs are empty on push, so fall back to the workflow_call defaults.
+          allowUpdates: ${{ inputs.enable_updates != false }}
+          commit: main
+          draft: ${{ inputs.enable_draft == true }}
+          makeLatest: ${{ inputs.enable_latest != false }}
+          generateReleaseNotes: ${{ inputs.enable_release_notes != false }}
+          name: ${{ steps.semver.outputs.next }}
+          tag: ${{ steps.semver.outputs.next }}
+          token: ${{ github.token }}
