@@ -70,7 +70,7 @@ jobs:
           noVersionBumpBehavior: "silent"
           noNewCommitBehavior: "silent"
           skipInvalidTags: true
-          patchList: fix,bugfix,perf,refactor,test,tests,chore,ci,build
+          patchList: fix,bugfix,perf,refactor,test,tests,chore,ci,build,docs
 
       - name: Create Release
         if: github.event_name != 'pull_request' && steps.semver.outputs.next != ''
