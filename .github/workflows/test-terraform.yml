@@ -1,0 +1,65 @@
+---
+# Validates a Terraform configuration and its examples without a backend,
+# and runs `terraform test`, once per Terraform version. ci-terraform.yml
+# calls this; it's a copy of Mosher-Labs/.github's terraform-module.yml.
+on:
+  workflow_call:
+    inputs:
+      terraform-versions:
+        description: JSON list of Terraform versions, e.g. '["1.16.5"]'.
+        required: true
+        type: string
+      examples-path:
+        description: Directory whose subdirectories are example configurations.
+        required: false
+        type: string
+        default: examples
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Keep this name stable: callers use it in required status checks.
+    name: validate and test (${{ matrix.terraform }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: ${{ fromJSON(inputs.terraform-versions) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Validate
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+      - name: Validate the examples
+        env:
+          EXAMPLES_PATH: ${{ inputs.examples-path }}
+        run: |
+          shopt -s nullglob
+          dirs=("$EXAMPLES_PATH"/*/)
+          if [ ${#dirs[@]} -eq 0 ]; then
+            echo "No examples under $EXAMPLES_PATH."
+            exit 0
+          fi
+          for dir in "${dirs[@]}"; do
+            echo "::group::$dir"
+            terraform -chdir="$dir" init -backend=false -input=false
+            terraform -chdir="$dir" validate
+            echo "::endgroup::"
+          done
+
+      # Tests that need a real provider should mock it, since this job has
+      # no credentials.
+      - name: Test
+        run: terraform test

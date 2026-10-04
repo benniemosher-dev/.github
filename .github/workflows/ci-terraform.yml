@@ -18,6 +18,17 @@ on:
         default: true
         required: false
         type: boolean
+      enable-test:
+        default: true
+        required: false
+        type: boolean
+      terraform-versions:
+        default: '["1.16.5"]'
+        description: >-
+          JSON list of Terraform versions for the test job. For a module, use
+          the oldest version its required_version allows and the newest.
+        required: false
+        type: string
     secrets:
       CLOUDFLARE_CONFIG:
         required: false
@@ -34,6 +45,13 @@ jobs:
     name: Security
     uses: "./.github/workflows/sec-terraform.yml"
     if: ${{ inputs.enable-security == true }}
+
+  test:
+    name: Test
+    uses: "./.github/workflows/test-terraform.yml"
+    if: ${{ inputs.enable-test == true }}
+    with:
+      terraform-versions: ${{ inputs.terraform-versions }}
 
   cost:
     name: Cost
