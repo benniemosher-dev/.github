@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -16,8 +16,8 @@ repos:
       - id: double-quote-string-fixer
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.35.1
+  - repo: https://github.com/adrienverge/yamllint
+    rev: 81e9f98ffd059efe8aa9c1b1a42e5cce61b640c6  # frozen: v1.35.1
     hooks:
       - id: yamllint
   - repo: https://github.com/bridgecrewio/checkov
