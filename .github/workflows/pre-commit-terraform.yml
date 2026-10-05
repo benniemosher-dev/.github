@@ -6,13 +6,13 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/antonbabenko/pre-commit-terraform:latest
+      image: ghcr.io/antonbabenko/pre-commit-terraform:latest@sha256:eefc3f73718c5fe34e28dda6f108b18e37408657ac7563732185d0d7a1a7feb5
     defaults:
       run:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -46,7 +46,7 @@ jobs:
 
       - name: Cache pre-commit since we use pre-commit from container
         if: steps.check_config.outputs.exists == 'true'
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-3|${{ hashFiles('.pre-commit-config.yaml') }}

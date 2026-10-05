@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Run tfsec
         uses: aquasecurity/tfsec-sarif-action@v0.1.4
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Terrascan
         id: terrascan
-        uses: tenable/terrascan-action@main
+        uses: tenable/terrascan-action@a4b0f7ec5fb3c4c66b8e76d824d958002f6ce12c # main
         with:
           iac_type: "terraform"
           policy_type: "aws"
@@ -36,7 +36,7 @@ jobs:
           sarif_upload: true
 
       - name: Upload SARIF files
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
         if: success() || failure()
         with:
           sarif_file: .
