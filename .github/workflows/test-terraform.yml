@@ -14,6 +14,14 @@ on:
         required: false
         type: string
         default: examples
+      test-directories:
+        description: >-
+          JSON list of extra directories to run `terraform test` in, such as
+          '["modules/datadog"]'. For a submodule whose tests need a provider
+          mock the root module can't have. The root's own tests always run.
+        required: false
+        type: string
+        default: '[]'
 
 permissions:
   contents: read
@@ -63,3 +71,14 @@ jobs:
       # no credentials.
       - name: Test
         run: terraform test
+
+      - name: Test the listed directories
+        env:
+          TEST_DIRECTORIES: ${{ inputs.test-directories }}
+        run: |
+          for dir in $(jq -r '.[]' <<<"$TEST_DIRECTORIES"); do
+            echo "::group::$dir"
+            terraform -chdir="$dir" init -backend=false -input=false
+            terraform -chdir="$dir" test
+            echo "::endgroup::"
+          done

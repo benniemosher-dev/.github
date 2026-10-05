@@ -4,4 +4,5 @@ rules:
   line-length:
     ignore:
       - .github/workflows
+      - workflow-templates
       - taskfiles/infra/Taskfile.yml
