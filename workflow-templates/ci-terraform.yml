@@ -12,6 +12,6 @@ on:
 jobs:
   ci-terraform:
     name: Terraform CI
-    uses: "benniemosher-dev/.github/.github/workflows/ci-terraform.yml@5ca06cf92808c8beee39c82417374081374ee1b5" # main
+    uses: "benniemosher-dev/.github/.github/workflows/ci-terraform.yml@851fd3dfb4d887d79dc24bfe78f6f328d34dc221" # main
     # with:
     #   enable-cost: false
