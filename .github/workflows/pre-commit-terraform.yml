@@ -6,7 +6,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/antonbabenko/pre-commit-terraform:latest@sha256:eefc3f73718c5fe34e28dda6f108b18e37408657ac7563732185d0d7a1a7feb5
+      image: ghcr.io/antonbabenko/pre-commit-terraform:latest@sha256:7ae0704c17d52e2f96c3c4c137c731738f7c558be01bcd35a0d810400fe691b4
     defaults:
       run:
         shell: bash
